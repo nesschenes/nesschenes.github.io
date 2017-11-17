@@ -102,7 +102,7 @@ img.emoji {
     padding: 8px 12px; }
 
 main.index {
-  max-width: 700px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 15px; }
   main.index article {
@@ -156,7 +156,7 @@ main.archive {
       color: #5badf0; }
 
 main.post {
-  max-width: 700px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 15px; }
   main.post article {
@@ -186,7 +186,7 @@ main.post {
     main.post .article-entry > h6:hover .header-anchor {
       display: inline; }
     main.post .article-entry img {
-      max-width: 700px; }
+      max-width: 800px; }
   main.post .article-title {
     margin: 0;
     text-align: center;
@@ -215,7 +215,7 @@ main.post {
     color: #666; }
 
 .page {
-  max-width: 700px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 15px;
   padding-top: 90px;
