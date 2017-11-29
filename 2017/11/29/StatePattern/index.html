@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>【C#】State Pattern | Ness</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="http://res.cloudinary.com/nesscloud/image/upload/v1510820789/egg_meavg9.png">
+  <link rel="stylesheet" href="/css/app.css">
+  <!-- <link rel='stylesheet' href='http://fonts.useso.com/css?family=Source+Code+Pro'> -->
+  
+</head>
+
+<body>
+  <nav class="app-nav">
+  
+    
+      <a href="/.">home</a>
+    
+  
+    
+      <a href="/archives">archive</a>
+    
+  
+</nav>
+
+  <main class="post">
+  <article>
+  <h1 class="article-title">
+    <a href="/2017/11/29/StatePattern/">【C#】State Pattern</a>
+  </h1>
+
+  <section class="article-meta">
+    <p class="article-date">November 29 2017</p>
+  </section>
+
+  <section class="article-entry">
+    <h1 id="State-Pattern-原則"><a href="#State-Pattern-原則" class="headerlink" title="State Pattern 原則"></a>State Pattern 原則</h1><ol>
+<li>Separate and encapsulate different behaviors.</li>
+<li>Least Knowledge Principle.</li>
+</ol>
+<h1 id="情境範例"><a href="#情境範例" class="headerlink" title="情境範例"></a>情境範例</h1><p>在 RPG 的世界裡，NPC 扮演著很重要的角色，<br>玩家接任務、了解世界觀、轉職等等…<br>單就任務來看，任務的狀態會決定 NPC 跟你講什麼。  </p>
+<p>所以可以寫成：<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> MissionState</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 關閉</span></span><br><span class="line">    Disabled,</span><br><span class="line">    <span class="comment">// 等待玩家接受</span></span><br><span class="line">    Wait,</span><br><span class="line">    <span class="comment">// 玩家進行中</span></span><br><span class="line">    Execute,</span><br><span class="line">    <span class="comment">// 完成</span></span><br><span class="line">    Complete,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NPC</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> MissionState mState = MissionState.Disabled;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetMissionState</span>(<span class="params">MissionState _state</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        mState = _state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Talk</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (mState)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> MissionState.Disabled:</span><br><span class="line">                Console.WriteLine(<span class="string">"你在看什麼？"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MissionState.Wait:</span><br><span class="line">                Console.WriteLine(<span class="string">"可以給我 10 個 突里薩茲盧恩石 嗎？"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MissionState.Execute:</span><br><span class="line">                Console.WriteLine(<span class="string">"你還沒拿到 10 個 突里薩茲盧恩石 嗎？"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MissionState.Complete:</span><br><span class="line">                Console.WriteLine(<span class="string">"下次再幫我歐！工具人 :&gt;"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        NPC npc = <span class="keyword">new</span> NPC();</span><br><span class="line"></span><br><span class="line">        npc.Talk();</span><br><span class="line"></span><br><span class="line">        npc.SetMissionState(MissionState.Wait);</span><br><span class="line">        npc.Talk();</span><br><span class="line"></span><br><span class="line">        npc.SetMissionState(MissionState.Execute);</span><br><span class="line">        npc.Talk();</span><br><span class="line"></span><br><span class="line">        npc.SetMissionState(MissionState.Complete);</span><br><span class="line">        npc.Talk();</span><br><span class="line"></span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看起來相當直覺，也易懂，<br>但如果要新增任務狀態，或是新增其他行為，就會變得雜亂 :&lt;<br>而且也違反 OCP 原則：<br>Class should allow extending, should prohibit modifying.  </p>
+<hr>
+<p>然而每次跟 NPC 對話都要用 Switch 決定行為，<br>很詭異，因為 NPC 的狀態或許根本沒改變過，卻一直檢查狀態！<br>如果未來擴充功能，還可能會有效能問題呢 QQ  </p>
+<p>所以我們應該讓各個狀態該做什麼事，自己決定，<br>NPC 只要有這個狀態屬性，其餘都不用管，當然這會衍伸一些問題，結尾講。<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">MissionBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> NPC mNPC;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MissionBehaviour</span>(<span class="params">NPC _npc</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        mNPC = _npc;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Talk</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MissionDisabled</span> : <span class="title">MissionBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MissionDisabled</span>(<span class="params">NPC _npc</span>) : <span class="title">base</span>(<span class="params">_npc</span>) </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 假設對話就讓任務進入下一個狀態</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Talk</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Console.WriteLine(<span class="string">"你在看什麼？"</span>);</span><br><span class="line"></span><br><span class="line">        mNPC.MissionBehaviour = <span class="keyword">new</span> MissionWait(mNPC);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MissionWait</span> : <span class="title">MissionBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MissionWait</span>(<span class="params">NPC _npc</span>) : <span class="title">base</span>(<span class="params">_npc</span>) </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 假設對話就讓任務進入下一個狀態</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Talk</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Console.WriteLine(<span class="string">"可以給我 10 個 突里薩茲盧恩石 嗎？"</span>);</span><br><span class="line"></span><br><span class="line">        mNPC.MissionBehaviour = <span class="keyword">new</span> MissionExecute(mNPC);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MissionExecute</span> : <span class="title">MissionBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MissionExecute</span>(<span class="params">NPC _npc</span>) : <span class="title">base</span>(<span class="params">_npc</span>) </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 假設對話就讓任務進入下一個狀態</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Talk</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Console.WriteLine(<span class="string">"你還沒拿到 10 個 突里薩茲盧恩石 嗎？"</span>);</span><br><span class="line"></span><br><span class="line">        mNPC.MissionBehaviour = <span class="keyword">new</span> MissionComplete(mNPC);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MissionComplete</span> : <span class="title">MissionBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MissionComplete</span>(<span class="params">NPC _npc</span>) : <span class="title">base</span>(<span class="params">_npc</span>) </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 假設對話就讓任務進入下一個狀態</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Talk</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Console.WriteLine(<span class="string">"下次再幫我歐！工具人 :&gt;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NPC</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> MissionBehaviour MissionBehaviour;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NPC</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        MissionBehaviour = <span class="keyword">new</span> MissionDisabled(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Talk</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        MissionBehaviour.Talk();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        NPC npc = <span class="keyword">new</span> NPC();</span><br><span class="line"></span><br><span class="line">        npc.Talk();</span><br><span class="line">        npc.Talk();</span><br><span class="line">        npc.Talk();</span><br><span class="line">        npc.Talk();</span><br><span class="line"></span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這樣就不需要 Switch, if-else 去判斷狀態了！<br>也方便後期擴展新狀態。<br>但是，缺點也是相當明顯喔！  </p>
+<ol>
+<li>Class 數量激增，影響開銷。</li>
+<li>多人開發容易有操作錯誤的問題，你的 Talk 跟他的 Talk 沒有共識。</li>
+</ol>
+
+  </section>
+</article>
+
+  <div class="sharing grid">
+  <section class="profile grid-item grid">
+    <img class="avatar" src="http://res.cloudinary.com/nesscloud/image/upload/v1510820952/egg_w_dizatr.png" alt="avatar" />
+    <div class="grid-item">
+      <p class="title"> Ness </p>
+      <p class="subtitle"> 私の金玉は血が出ってしまった </p>
+    <div>
+  </section>
+
+  <section class="share-btns">
+    <!-- <p> share it if you like it~ </p> -->
+    <a
+  class="twitter-share-button"
+  data-size="large"
+  data-via="DrakeLeung"
+  href="https://twitter.com/intent/tweet?text= id="State-Pattern-原"
+>
+  Tweet
+</a>
+
+<script>
+  window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  js.async = true;
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+</script>
+
+  </section>
+</div>
+
+
+  
+    
+<section class="article-comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+<script>
+  var disqus_shortname = 'ness';
+  
+  var disqus_url = 'http://yoursite.com/2017/11/29/StatePattern/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+  
+</main>
+
+</body>
+</html>
